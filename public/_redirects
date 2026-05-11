@@ -1,0 +1,4 @@
+# SPA fallback — all routes serve index.html
+# API routes are handled by CF Pages Functions (not redirected)
+/api/*  /api/:splat  200
+/*      /index.html  200
