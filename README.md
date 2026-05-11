@@ -13,7 +13,7 @@
 
 <!-- Badges row 2 -->
 <p>
-  <img src="https://img.shields.io/badge/Claude_Sonnet_4-Powered-8A2BE2?style=for-the-badge&logo=anthropic&logoColor=white" />
+  <img src="https://img.shields.io/badge/Gemini_2.0_Flash-Powered-4285F4?style=for-the-badge&logo=google&logoColor=white" />
   <img src="https://img.shields.io/badge/Course-21CSC501T-00D4FF?style=for-the-badge" />
   <img src="https://img.shields.io/badge/SRMIST-Chennai-FF6B6B?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-6BCB77?style=for-the-badge" />
@@ -25,7 +25,9 @@
 
 <br/>
 
-<img src="https://img.shields.io/badge/⚡_Live_Demo-SwiftStudy.pages.dev-00D4FF?style=flat-square&labelColor=07070E" height="28"/>
+<a href="https://swiftstudy-1dl.pages.dev">
+  <img src="https://img.shields.io/badge/⚡_Live_Demo-swiftstudy--1dl.pages.dev-00D4FF?style=flat-square&labelColor=07070E" height="28"/>
+</a>
 
 </div>
 
@@ -35,12 +37,13 @@
 
 | Feature | Detail |
 |---------|--------|
-| 🤖 **AI-curated, not scraped** | Claude Sonnet 4 + live web search finds the *best* videos, not just the most popular |
-| 🔒 **Zero API key exposure** | Anthropic key lives only in Cloudflare edge environment — never in the browser |
+| 🤖 **AI-curated, not scraped** | Gemini 2.0 Flash + Google Search finds the *best* videos, not just the most popular |
+| 🔒 **Zero API key exposure** | Gemini key lives only in Cloudflare edge environment — never in the browser |
 | 📚 **Full syllabus coverage** | All 5 units · 60+ topics from the complete 21CSC501T SRMIST syllabus |
 | 🎯 **4-layer prompt stack** | RISEN + ReAct + Least-to-Most + CO-STAR framework for precision curation |
 | ⚡ **Edge-deployed** | Cloudflare Pages + Functions — global sub-100ms response times |
 | 📱 **Fully responsive** | Mobile-first, works on phone, tablet, desktop |
+| ♾️ **Lifetime free** | Gemini free tier: 1,500 searches/day, no credit card, forever |
 
 ---
 
@@ -114,11 +117,11 @@ Cloudflare Pages Function (Edge)
   ├── Input validation + sanitisation
   ├── CORS origin allowlist
   ├── Body size cap (4 KB)
-  └── Anthropic API call (key never leaves edge)
+  └── Gemini API call (key never leaves edge)
               │
               ▼
-      Claude Sonnet 4
-      + web_search tool
+     Gemini 2.0 Flash
+     + Google Search tool
               │
               ▼
   ├── URL allowlist (youtube.com only)
@@ -133,7 +136,7 @@ Cloudflare Pages Function (Edge)
 | Threat | Mitigation |
 |--------|------------|
 | API key exposure | Lives **only** in Cloudflare env vars · never bundled in JS |
-| Prompt injection via topic | Input sanitised · strips `<>"'\`` before Anthropic call |
+| Prompt injection via topic | Input sanitised · strips `<>"'\`` before Gemini call |
 | Malicious URLs in response | Hard allowlist: only `youtube.com` / `youtu.be` pass through |
 | Oversized payloads | 4 KB body cap · `Content-Length` check |
 | Clickjacking | `X-Frame-Options: DENY` on every response |
@@ -148,7 +151,7 @@ Cloudflare Pages Function (Edge)
 
 ### Prerequisites
 - Node.js 20+
-- A free [Anthropic API key](https://console.anthropic.com/)
+- A free [Gemini API key](https://aistudio.google.com) — no credit card, 1500 req/day free
 - A free [Cloudflare account](https://dash.cloudflare.com/)
 
 ### Local development
@@ -163,7 +166,7 @@ npm install
 
 # Set up local secrets
 Copy-Item .dev.vars.example .dev.vars
-# Edit .dev.vars → add your ANTHROPIC_API_KEY
+# Edit .dev.vars → add your GEMINI_API_KEY
 
 # Start Vite dev server
 npm run dev
@@ -182,7 +185,7 @@ App is at `http://localhost:5173` · API proxies to `http://localhost:8788`
 SwiftStudy/
 ├── functions/
 │   └── api/
-│       └── search.ts          # Cloudflare Pages Function — secure API proxy
+│       └── search.ts          # Cloudflare Pages Function — secure Gemini API proxy
 ├── src/
 │   ├── components/
 │   │   ├── Header.tsx          # App header + prompt toggle
@@ -234,12 +237,12 @@ SwiftStudy/
    | Build command | `npm run build` |
    | Build output directory | `dist` |
 
-4. **Environment variables** (mark both as **Encrypted**):
+4. **Environment variables** (mark both as **Secret**):
 
    | Variable | Value |
    |----------|-------|
-   | `ANTHROPIC_API_KEY` | Your key from [console.anthropic.com](https://console.anthropic.com) |
-   | `ALLOWED_ORIGINS` | `https://swift-study.pages.dev` *(update after first deploy)* |
+   | `GEMINI_API_KEY` | Your free key from [aistudio.google.com](https://aistudio.google.com) |
+   | `ALLOWED_ORIGINS` | `https://swiftstudy-1dl.pages.dev` |
 
 5. **Save and Deploy** — done in ~2 minutes ⚡
 
@@ -264,7 +267,7 @@ Every push to `main` now builds and deploys automatically.
 | **Build** | Vite 6 | Sub-2s builds, native ESM |
 | **Styling** | Custom CSS design system | Full design control, zero runtime overhead |
 | **API Proxy** | Cloudflare Pages Functions | Edge serverless, API key stays server-side |
-| **AI** | Claude Sonnet 4 + web_search | Real-time web search + structured output |
+| **AI** | Gemini 2.0 Flash + Google Search | Real-time web search + structured output · free forever |
 | **Hosting** | Cloudflare Pages | Global edge CDN, free tier |
 | **CI/CD** | GitHub Actions | Auto-deploy on every push to main |
 
@@ -275,9 +278,9 @@ Every push to `main` now builds and deploys automatically.
 ```
 dist/index.html          1.58 kB │ gzip:  0.79 kB
 dist/assets/index.css    8.74 kB │ gzip:  2.31 kB
-dist/assets/index.js    14.09 kB │ gzip:  5.48 kB
+dist/assets/index.js    14.07 kB │ gzip:  5.47 kB
 dist/assets/react.js   141.74 kB │ gzip: 45.48 kB
-✓ Built in 1.81s
+✓ Built in 1.55s
 ```
 
 ---
@@ -305,7 +308,7 @@ MIT © [Kumar Waibhav Akshat](https://github.com/kumarwaibhav) · SRMIST Chennai
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:C77DFF,100:00D4FF&height=100&section=footer" width="100%"/>
 
-**Built with 🤖 Claude + ☁️ Cloudflare + ❤️ for exam season**
+**Built with 🤖 Gemini + ☁️ Cloudflare + ❤️ for exam season**
 
 <sub>If SwiftStudy helped you, leave a ⭐ on GitHub!</sub>
 
